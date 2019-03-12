@@ -1,0 +1,17 @@
+1.对二维数组取元素时可以用[][]，但是对Mat类型的矩阵不可以用[][],而需要用image.at<uchar>(2,3)获得矩阵中的元素值。
+否则会遇到no match for operator[](operand types are 'cv::Mat' and 'int')的问题
+
+2.Eigen下的数组可以进行运算，vector下的数组不能运算，想运算需要先转化
+对二者矩阵的使用
+Eigen ：d(1,2)
+vector: d[1][2]
+
+Matrix <double,n,1>matz;会报错：
+'n' cannot appear in a constant-expression
+需要改成MatrixXd matz(n,1);
+
+一定要注意数据类型的问题，得到深度图的数据时是用ushort而不能用uchar或者float
+
+一开始算出来的desired图和实际depth图的Z值相同，是因为用的都是话题接受时的相同的图所以导致问题，应该再另设变量存下两个图
+
+waitKey卡了很长时间，很郁闷，一开始想着是在得到实际图之后把一个标志位设置好，再动态的显示实际的depth图，结果不成功，后期改成一开始就同时显示两个图，然后按‘空格键’对desired图进行保存和处理，按esc键实现对depth图的处理，这样可以实时的显示图像画面，
